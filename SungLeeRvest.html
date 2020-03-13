@@ -2796,13 +2796,14 @@ div.tocify {
 <p>We will need to load the library for <code>rvest</code>.</p>
 <pre class="r"><code>library(tidyverse)
 library(rvest)           # Tidyverse package for rvest</code></pre>
-<p>To take a look at what <code>rvest</code> can do, let’s scrap the FiveThirtyEight web page at <a href="https://data.fivethirtyeight.com/" class="uri">https://data.fivethirtyeight.com/</a>. Please note that I downloaded a copy of the html for the page and placed it in this file:</p>
-<p>climateHTML &lt;- read_html(“<a href="https://raw.githubusercontent.com/logicalschema/DATA607/master/Project%202/usclimatedata.html" class="uri">https://raw.githubusercontent.com/logicalschema/DATA607/master/Project%202/usclimatedata.html</a>”)</p>
+<p>To take a look at what <code>rvest</code> can do, let’s scrap the FiveThirtyEight web page at <a href="https://data.fivethirtyeight.com/" class="uri">https://data.fivethirtyeight.com/</a><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Please note that I downloaded a copy of the html for the page and placed it in this file <a href="https://raw.githubusercontent.com/logicalschema/SPRING2020TIDYVERSE/master/fivethirtyeight.html" class="uri">https://raw.githubusercontent.com/logicalschema/SPRING2020TIDYVERSE/master/fivethirtyeight.html</a>.</p>
+<pre class="r"><code>sampleHTML &lt;- read_html(&quot;https://raw.githubusercontent.com/logicalschema/SPRING2020TIDYVERSE/master/fivethirtyeight.html&quot;)</code></pre>
 </div>
 <div class="footnotes">
 <hr />
 <ol>
 <li id="fn1"><p><a href="https://cran.r-project.org/web/packages/rvest/rvest.pdf" class="uri">https://cran.r-project.org/web/packages/rvest/rvest.pdf</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>The download was taken on March 12, 2020 at 10:28 PM EST<a href="#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
 
