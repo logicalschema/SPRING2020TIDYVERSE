@@ -12,3 +12,8 @@ Thumbs.db
 # RMarkdown files #
 *.Rmd
 *.Rhistory
+*.log
+*.out
+*.tex
+*.toc
+*.aux
