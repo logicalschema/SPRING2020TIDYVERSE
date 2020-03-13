@@ -2794,7 +2794,8 @@ div.tocify {
 <div id="preparation" class="section level1">
 <h1>Preparation</h1>
 <p>We will need to load the library for <code>rvest</code>.</p>
-<pre class="r"><code>library(rvest)           # Tidyverse package for rvest</code></pre>
+<pre class="r"><code>library(rvest)           # Tidyverse package for rvest
+library(XML)             # Not necessary for rvest but will be used later</code></pre>
 <p>To take a look at what <code>rvest</code> can do, let’s scrap the FiveThirtyEight web page at <a href="https://data.fivethirtyeight.com/" class="uri">https://data.fivethirtyeight.com/</a><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Please note that I downloaded a copy of the html for the page and placed it in this file <a href="https://raw.githubusercontent.com/logicalschema/SPRING2020TIDYVERSE/master/fivethirtyeight.html" class="uri">https://raw.githubusercontent.com/logicalschema/SPRING2020TIDYVERSE/master/fivethirtyeight.html</a>.</p>
 <p>The following code allows you to read a URL into your program.</p>
 <pre class="r"><code># This line reads the contents of the url into sampleHTML. 
@@ -3495,7 +3496,7 @@ sampleHTML &lt;- read_html(&quot;https://raw.githubusercontent.com/logicalschema
 
 
 sampleHTML %&gt;%
-  html_node(&quot;table&quot;) %&gt;%
+  html_node(&quot;#dataIndex&quot;) %&gt;%
   html_table(fill = TRUE)   # fill = TRUE for badly formed HTML tables</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -3504,9 +3505,36 @@ sampleHTML %&gt;%
 </div>
 </div>
 </div>
-<div id="wrangling-a-malformed-html-node" class="section level1">
-<h1>Wrangling a Malformed HTML Node</h1>
+<div id="tidying-an-html-table" class="section level1">
+<h1>Tidying an HTML Table</h1>
 <p>The <code>table</code> node had 3 missing <code>&lt;th&gt;</code> (table header cell) nodes which resulted in a bad data frame. Let’s see how we can fix this problem.</p>
+<pre class="r"><code>#The original HTML &lt;th&gt; row for the table headers
+headerRow &lt;- sampleHTML %&gt;% 
+                 html_node(&quot;thead&quot;)
+
+headerRow %&gt;%
+  toString.XMLNode</code></pre>
+<pre><code>## [1] &quot;{html_node}\n&lt;thead&gt;\n[1] &lt;tr&gt;\\n&lt;th&gt;data set&lt;/th&gt;\\n&lt;th&gt;related content&lt;/th&gt;\\n&lt;/tr&gt;&quot;</code></pre>
+<pre class="r"><code>#Create a new header row for the table
+newheaderRow &lt;- &quot;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;data set&lt;/th&gt;&lt;th&gt;related content&lt;/th&gt;&lt;th&gt;Date&lt;/th&gt;&lt;th&gt;Link&lt;/th&gt;&lt;th&gt;Zip File&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&quot;
+
+# Grab all the &lt;tr&gt; rows
+rows &lt;- sampleHTML %&gt;%
+  html_node(&quot;#dataIndex&quot;) %&gt;%
+  html_nodes(&quot;tr&quot;)
+
+# Remove the problematic header row
+rows &lt;- rows[-1]
+
+newHTMLTableString &lt;- paste(&quot;&lt;table&gt;&quot;, newheaderRow, rows, &quot;&lt;/table&gt;&quot;)
+newHTMLTable &lt;- minimal_html(newHTMLTableString)
+
+dataTable &lt;- html_table(newHTMLTable)
+
+dataTable</code></pre>
+<pre><code>## [[1]]
+##   data set related content Date Link Zip File
+## 1    polls    Latest Polls   NA info       NA</code></pre>
 </div>
 <div class="footnotes">
 <hr />
