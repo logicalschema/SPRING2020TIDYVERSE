@@ -3505,37 +3505,6 @@ sampleHTML %&gt;%
 </div>
 </div>
 </div>
-<div id="tidying-an-html-table" class="section level1">
-<h1>Tidying an HTML Table</h1>
-<p>The <code>table</code> node had 3 missing <code>&lt;th&gt;</code> (table header cell) nodes which resulted in a bad data frame. Let’s see how we can fix this problem.</p>
-<pre class="r"><code>#The original HTML &lt;th&gt; row for the table headers
-headerRow &lt;- sampleHTML %&gt;% 
-                 html_node(&quot;thead&quot;)
-
-headerRow %&gt;%
-  toString.XMLNode</code></pre>
-<pre><code>## [1] &quot;{html_node}\n&lt;thead&gt;\n[1] &lt;tr&gt;\\n&lt;th&gt;data set&lt;/th&gt;\\n&lt;th&gt;related content&lt;/th&gt;\\n&lt;/tr&gt;&quot;</code></pre>
-<pre class="r"><code>#Create a new header row for the table
-newheaderRow &lt;- &quot;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;data set&lt;/th&gt;&lt;th&gt;related content&lt;/th&gt;&lt;th&gt;Date&lt;/th&gt;&lt;th&gt;Link&lt;/th&gt;&lt;th&gt;Zip File&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&quot;
-
-# Grab all the &lt;tr&gt; rows
-rows &lt;- sampleHTML %&gt;%
-  html_node(&quot;#dataIndex&quot;) %&gt;%
-  html_nodes(&quot;tr&quot;)
-
-# Remove the problematic header row
-rows &lt;- rows[-1]
-
-newHTMLTableString &lt;- paste(&quot;&lt;table&gt;&quot;, newheaderRow, rows, &quot;&lt;/table&gt;&quot;)
-newHTMLTable &lt;- minimal_html(newHTMLTableString)
-
-dataTable &lt;- html_table(newHTMLTable)
-
-dataTable</code></pre>
-<pre><code>## [[1]]
-##   data set related content Date Link Zip File
-## 1    polls    Latest Polls   NA info       NA</code></pre>
-</div>
 <div class="footnotes">
 <hr />
 <ol>
