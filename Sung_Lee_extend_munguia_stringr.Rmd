@@ -1,0 +1,97 @@
+---
+title: "Data 607 Tidyverse Extend Assignment"
+author: "Sung Lee"
+date: "4/20/2020"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_collapsed: yes
+    toc_depth: 3
+    toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+theme: lumen
+number_sections: yes
+---
+
+[Assignment on RPubs](https://rpubs.com/logicalschema/data607_extend "Sung's Rpub Extend Assignment")
+<br>
+[Create Rmd on Github](https://github.com/acatlin/SPRING2020TIDYVERSE/blob/master/munguia_stringr.Rmd "Michael Munguia's Create Assignment Github")  
+[Extend Rmd on Github](https://github.com/acatlin/SPRING2020TIDYVERSE/blob/master/Sung_Lee_extend_munguia_stringr.Rmd "Sung Lee's Extend Assignment Github")  
+
+
+# Purpose  
+
+This project is to extend Michael Munguia's `stringr` CREATE project. It will provide additional demonstration functions for the `stringr` package.
+
+
+# Data  
+
+This Rmd will employ Michael's csv data that is already a part of this repository. The csv file is `endorsements-2020.csv` and resides at this link: https://raw.githubusercontent.com/acatlin/SPRING2020TIDYVERSE/master/endorsements-2020.csv.  
+
+Let's setup the initial libraries.
+
+```{r}
+
+# Setup of the initial libraries for this demo
+library(dplyr)
+library(stringr)
+
+# The repo variable is the SPRING2020TIDYVERSE repository
+repo <- "https://raw.githubusercontent.com/acatlin/SPRING2020TIDYVERSE/master/"
+
+```  
+
+<br>
+We will read in the csv that resides in the repository.
+
+
+```{r, message=FALSE}
+
+# Imports the csv as a dataframe
+(df <- readr::read_csv(paste0(repo, "endorsements-2020.csv")))
+```
+
+
+# Helpful Functions {.tabset}
+
+Michael's project demonstrated the use of `str_detect`, `mutate_at`, `str_replace`, `str_split`, `select`, and `filter`. I will look at two functions.
+
+<br>
+
+## str_replace_na 
+
+Let's look at the function `str_replace_na`. This function is able to replace `NA` values with a suitable replacement string. Let's create a new dataframe where `NA` values in the city column are replaced with the string "Not Available".
+
+```{r}
+
+# Creates a new dataframe where NA is replaced with "Not Available"
+(city_df <- df %>% mutate_at("city", str_replace_na, "Not Available"))
+
+```
+
+<br>
+
+
+## str_to_upper  
+
+The function `str_to_upper` converts a string to upper case letters. This function may be handy for future text wrangling.
+
+Let's capitalize the data in the `position` column using this function.  
+
+
+```{r}
+
+# Creates a new dataframe where position is capitalized
+(capitalize_position_df <- df %>% mutate_at("position", str_to_upper, "en"))
+
+```  
+
+<br>
+
+# Conclusion  
+
+`stringr` provides handy functions to wrangle data. More information about `stringr` can be found here: https://cran.r-project.org/web/packages/stringr/stringr.pdf  
+
