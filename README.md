@@ -721,4 +721,6 @@ Assignment shows examples of stringr, tidyr, tibble and ggplot.
 <!-- End: Extended Vincent Miceli Created by Bruno de Melo on 04/19/2020--> 
 =======
 
-
+## Sung Lee EXTENDS Michael Munguia stringr Project
+### URL for Rpubs is here: https://rpubs.com/logicalschema/data607_extend
+### Rmd for Project is here (if update is committed): https://github.com/acatlin/SPRING2020TIDYVERSE/blob/master/Sung_Lee_extend_munguia_stringr.Rmd
