@@ -506,6 +506,15 @@ You should complete both parts of the assignment and make your submissions on th
 
 * https://acatlin.github.io/SPRING2020TIDYVERSE/forcats_makes_plots_better.html - how to use capabilities of forcats package to improve your plots!  Andy Catlin and Ait Elmouden Abdellah
 
+* http://rpubs.com/christianthieme/589762 (RMD file: PurrrMap-LoseTheForLoop.rmd) - Using purrr::map() and purrr::pmap() instead of for loops in R - By Christian Thieme  
+    + Extended purrr (RMD filename: same as above.) https://rpubs.com/dpong8988/602410 - by Dennis Pong  
+    + 3 tutorials and 1 important concept on anonymous function  
+        + 1. purrr::map_df()  
+        + 2. purrr:keep()  
+        + 3. purrr::discard()  
+        
+          
+=======
 
 * http://rpubs.com/christianthieme/589762 (RMD file: PurrrMap-LoseTheForLoop.rmd) - Using purrr::map() and purrr::pmap() instead of for loops in R - By Christian Thieme
 
@@ -718,9 +727,12 @@ Assignment shows examples of stringr, tidyr, tibble and ggplot.
 ## fct_recode: allows to change value of factors, also allows for combining factors into groups
 ## fct_lump: allows to lump together group of factors. Useful for make a plot or table simpler
  
+ 
+=======
 <!-- End: Extended Vincent Miceli Created by Bruno de Melo on 04/19/2020--> 
 =======
 
 ## Sung Lee EXTENDS Michael Munguia stringr Project
 ### URL for Rpubs is here: https://rpubs.com/logicalschema/data607_extend
 ### Rmd for Project is here (if update is committed): https://github.com/acatlin/SPRING2020TIDYVERSE/blob/master/Sung_Lee_extend_munguia_stringr.Rmd
+
