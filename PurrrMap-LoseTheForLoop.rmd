@@ -1,12 +1,13 @@
 ---
 title: 'Tidyverse CREATE Assignment: purrr::map() Functions'
-author: "Christian Thieme"
-date: "3/24/2020"
+author: "Christian Thieme; Extended by Dennis Pong;"
+date: "3/24/2020; 3/18/2020"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+options(readr.show_progress = FALSE)
 ```
 
 # Using purrr::map() Instead of For Loops in R
@@ -102,7 +103,75 @@ As you can see above, the purrr::pmap function worked seamlessly. As I mentioned
 The purrr library is an incredible tool to help make your code faster and more efficient by eliminating for loops and taking advantage of R's functional abilities. 
 
 
+##  (Extension) 
+**There are going to be 3 functions and one important concept that I'm going to showcase in this extension of a well-done tutorial by Christian**
+
+#### Tutorial 1. **map_df(X, Func) where *X* is A list or atomic vector and *Func* can be a function, formula, or vector**
+
+**Purpose:**    
+Map_df takes a list and a function and returns a single data frame.
+
+
+**Example:**  
+This example is meant to help you speed up your file loading files locally.
+
+What it does is map_df takes myfiles which is basically a list of files that matches the pattern of vgsales in the filename and ends with a *.csv* extension. After that, the funcdtion map_df takes a second arugment in read_csv which it applies to the first argument myfiles iteratively. At the end, the end result is a data frame
+```{r map_df, message = FALSE}
+# match the filename that begins with vgsales and ends with .csv
+myfiles <- list.files(pattern = "^(vgsales.+)\\.csv")
+
+mydf <- map_df (myfiles, read_csv )
+mydf
+```
+Note that I intentionally brought in the records that has NA in Year. See the 271 parsing failures above.  
+
+**Important concept: What is an anonymous function?  It is a function that doesn’t have a name.**  
+e.g. 
+
+A normal function, __*round*__ is being used in the following situation: 
+map_dbl(my_vector, round) means you take a map function and applies the round function to its first argument my_vector and outputs the results in dbl, namely double precision, as Christian mentioned above. 
+
+An anonymous function would be something like the following: 
+map_dbl(my_vector, $\sim .x + 10$) where you see the second arugment starts with a ~ and follows with $.x$ (. alone is also acceptable) + 10. What it means is there is a function of no name that takes columns in my_vector and add 10 to each of it. Note that ~ here just simply is a connector that means *of*. And $.x$ or . itself symbolizes each element of the first argument.
 
 
 
+#### Tutorial 2. **keep(X, Func) keeps all matching elements to Func**
+
+**Purpose:**    
+keep takes on a list or vector and applies the function and will only keep all matching elements
+
+**Example:**  
+The function keep keeps only numeric variables in the data frame mydf using is.numeric. Then I go on the summarize the sales attributes by year.
+```{r keep}
+# keep takes only the matching columns that satisfies is.numeric (). 
+# Removing Rank 
+# filter out the rows that has Year NA
+# group_by Year and summarise by the function sum()
+
+mydf %>% keep(is.numeric) %>% select (-Rank) %>% filter (is.na(Year) == FALSE) %>% group_by (Year) %>% summarise_all(sum)
+
+
+```
+
+
+#### Tutorial 3. **discard(X, Func) keeps all matching elements to Func**
+
+**Purpose:**    
+discard takes on a list or vector and applies the function Func. It will only discard all matching elements as a result of the function Func
+
+**Example:**  
+The function discard apparently removes all the numeric columns from the dataframe mydf.
+
+```{r discard1}
+# note that there are a number of columns in mydf that is of type numeric
+str(mydf)
+
+```
+
+```{r discard2}
+# discard along with dplyr gives you 
+mydf %>% discard( is.numeric) %>% str
+
+```
 
